@@ -10,14 +10,17 @@ ui <- fluidPage(
 )
 
 server <- function(input,output,session) {
+  # create a reactive expression
+  dataset <- reactive({
+    get(input$dataset, 'package:datasets')
+  })
+  
   output$summary <- renderPrint({
-    dataset <- get(input$dataset, 'package:datasets')
-    summary(dataset)
+    summary(dataset())
   })
   
   output$table <- renderTable({
-    dataset <- get(input$dataset, 'package:datasets')
-    dataset
+    dataset()
   })
 }
 
